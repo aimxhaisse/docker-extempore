@@ -1,21 +1,27 @@
-FROM ubuntu
+FROM ubuntu:saucy
 MAINTAINER s. rannou <mxs@sbrk.org>
 
 # deps
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y		    \
     git				   		      			    \
     binutils								    \
-    gcc									    \
-    wget								    \
     g++									    \
+    wget								    \
     make								    \
     portaudio19-dev							    \
     libpcre3-dev							    \
     mesa-common-dev							    \
-    libgl1-mesa-dev
+    libgl1-mesa-dev							    \
+    jackd								    \
+    librtmidi1								    \
+    lame								    \
+    vlc									    \
+    libavcodec-extra-53							    \
+    vlc-plugin-jack &&							    \
+    apt-get clean
 
 RUN git clone https://github.com/digego/extempore.git /extempore
 
@@ -37,4 +43,13 @@ ENV EXT_LLVM_DIR /llvm-build
 RUN cd /extempore &&							    \
     ./all.bash
 
-CMD cd /extempore && /extempore/extempore
+EXPOSE 8080
+EXPOSE 7098
+EXPOSE 7099
+
+RUN adduser --system --shell /bin/bash --disabled-password --home /extempore extempore
+RUN chown -R extempore /extempore
+USER extempore
+
+ADD run.bash /entrypoint.bash
+CMD /entrypoint.bash
