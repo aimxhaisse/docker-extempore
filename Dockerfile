@@ -1,8 +1,6 @@
-FROM ubuntu:saucy
+FROM ubuntu:trusty
 MAINTAINER s. rannou <mxs@sbrk.org>
 
-# deps
-RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main universe" > /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y		    \
