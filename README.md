@@ -3,7 +3,7 @@
 ## Build
 
 ```
-docker build -t extempore .
+docker-compose build
 ```
 
 ## Usage

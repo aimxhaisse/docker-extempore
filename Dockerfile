@@ -17,16 +17,16 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y		    \
     librtmidi1								    \
     lame								    \
     vlc									    \
-    libavcodec-extra-53							    \
+    libavcodec-extra							    \
     vlc-plugin-jack &&							    \
     apt-get clean
 
 RUN git clone https://github.com/digego/extempore.git /extempore
 
-RUN wget http://llvm.org/releases/3.2/llvm-3.2.src.tar.gz -O llvm.tar.gz && \
+RUN wget http://llvm.org/releases/3.4/llvm-3.4.src.tar.gz -O llvm.tar.gz && \
     tar -xf llvm.tar.gz && 				     		    \
     rm -f llvm.tar.gz && 				  		    \
-    mv llvm-3.2.src /llvm &&						    \
+    mv llvm-3.4 /llvm &&						    \
     cd /llvm/lib/AsmParser &&						    \
     patch < /extempore/extras/llparser.patch &&				    \
     cd /llvm &&				     				    \
