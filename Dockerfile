@@ -51,5 +51,5 @@ RUN adduser --system --shell /bin/bash --disabled-password --home /extempore ext
 RUN chown -R extempore /extempore
 USER extempore
 
-ADD run.bash /entrypoint.bash
+ADD entrypoint.bash /entrypoint.bash
 CMD /entrypoint.bash
